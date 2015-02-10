@@ -1,0 +1,102 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Order>
+
+@{
+    ViewBag.Title = "My Shop Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var textMessage = "";
+    if (ViewBag.customerShopCart == null || Model.Count() == 0)
+    {
+        textMessage = "Вашата кошничка е празна.";
+    }
+    var idList = "";
+}
+
+<h2>My Shop Cart</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Item Type
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Date Ordered
+        </th>
+        <th>
+            Date to be completed
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Total Price
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOrdered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCompleted.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+        @*</tr>
+        <tr style="margin: 10px auto 10px auto;">*@
+            @if (ViewBag.UserType == "customer")
+            {
+                <td style="width: 100px;" colspan="2">
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    <br />
+                    @Html.ActionLink("Remove", "Remove", new { id = item.ID })
+                    <br />
+                    @Html.ActionLink("Buy Item", "BuyItem", new { id = item.ID })                                
+                </td>                
+            }
+        </tr>
+        
+            idList += item.ID + ",";
+        
+    }
+
+</table>
+@if (ViewBag.customerShopCart != null || Model.Count() != 0)
+{
+    <tr>
+        <td>
+            @Html.ActionLink("Buy All", "BuyAllItems", new { ids = idList })
+        </td>
+    </tr>
+}
+
+
+<div>
+    <hr />
+    <p>
+        @textMessage
+    </p>
+</div>

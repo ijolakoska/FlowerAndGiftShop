@@ -1,0 +1,81 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Service>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.UserType == "employee")
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<a name="Events">
+    <div class="row" style="text-align: justify;">
+        <div class="col-md-4" style="padding:30px; ">
+            <h2>Promotions</h2>
+            <p>
+                This month you can enjoy at more than 50 products included in Valentine's day promotion.
+                Stay tuned 'cause many new promotions are coming up - new month, same place!
+            </p>
+            <p><a class="btn btn-info" href="~/Services/Promotion">View current promotion &raquo;</a></p>
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <h2>Free Delivery</h2>
+            <p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
+            <p><a class="btn btn-info" href="~/Services/Index#Delivery">More about delivery &raquo;</a></p>
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <h2>Register account</h2>
+            <p>Still not our member? Register your account for FREE and use our great features like having your own list of Favourites, make Orders or keep items to your Shop Cart!</p>
+            <p><a class="btn btn-info" href="~/Account/Register">Register NOW &raquo;</a></p>
+        </div>
+    </div>
+    <div class="row" style="text-align: justify;">
+        <div class="col-md-4" style="padding:30px; ">
+            <h2>Promotions</h2>
+            <p>
+                This month you can enjoy at more than 50 products included in Valentine's day promotion.
+                Stay tuned 'cause many new promotions are coming up - new month, same place!
+            </p>            
+        </div>
+    </div>
+</a>
+<a name="Decorations"></a>
+    <div class="row" style="text-align: justify;">
+        <div class="col-md-4" style="padding:30px; ">
+            <h2>Decorations</h2>
+            <p>
+                This month you can enjoy at more than 50 products included in Valentine's day promotion.
+                Stay tuned 'cause many new promotions are coming up - new month, same place!
+            </p>
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <h2>Free Delivery</h2>
+            <p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
+            
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <h2>Register account</h2>
+            <p>Still not our member? Register your account for FREE and use our great features like having your own list of Favourites, make Orders or keep items to your Shop Cart!</p>
+            
+        </div>
+    </div>
+
+
+    <div class="row" style="text-align: justify;">
+        <div class="col-md-4" style="padding:30px; ">
+            <h2>Promotions</h2>
+            <p>
+                This month you can enjoy at more than 50 products included in Valentine's day promotion.
+                Stay tuned 'cause many new promotions are coming up - new month, same place!
+            </p>
+        </div>
+    </div>
+
+<a name="Delivery"></a>
+<h2>Free Delivery</h2>
+<p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
+<p>Our shop offers free delivery for every order which address is less than 30km from our shop address.</p>
+

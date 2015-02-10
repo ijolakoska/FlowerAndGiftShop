@@ -1,0 +1,55 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Product>
+
+@{
+    ViewBag.Title = "Gifts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 0;
+    var tr = new HtmlString("<tr>");
+    var trclose = new HtmlString("</tr>");
+}
+
+<h2>Gifts</h2>
+
+@if (ViewBag.UserType == "employee")
+{
+    <p style="margin-top: 30px;">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+    </p>
+}
+    <table class="table">
+        <tr>
+            @foreach (var item in Model)
+            {
+                <td style="width: 200px;">
+                    <img src="../@item.Image" alt="@item.Name" height="210" width="180" />
+                </td>
+                <td>
+                    <div style="height: 145px">
+                        @Html.DisplayFor(modelItem => item.Name)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.Price) den.
+                        <br />
+                    </div>
+                    <div style="display: block; height: 60px">
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary", @style = "" })
+                        <br />
+                        @if (ViewBag.UserType == "employee")
+                        {
+                            <div id="adminControls" style="margin-bottom: 1px;">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-info btn-xs" }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-info btn-xs" })
+                            </div>
+                        }
+                    </div>
+                </td>
+
+                count++;
+                if (count % 3 == 0)
+                {
+                    @trclose;
+                    @tr;
+                }
+
+             }
+        </tr>
+    </table>

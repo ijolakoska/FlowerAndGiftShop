@@ -1,0 +1,77 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Order>
+
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Orders</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Item Type
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Date Ordered
+        </th>
+        <th>
+            Date to be completed
+        </th>
+        <th>
+            Total Price
+        </th>
+        <th>
+            Finished Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOrdered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasCompleted)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 130px;" colspan="2">
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+            </td>
+
+            @if (ViewBag.UserType != "customer")
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            }
+        </tr>
+        <tr>
+        </tr>
+    }
+
+</table>

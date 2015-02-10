@@ -1,0 +1,177 @@
+﻿@model FlowerAndGiftShop.ViewModels.FlowerOrder
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @section scripts {
+        <script>
+            $(document).ready(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: "dd/mm/yy"
+                });
+            });
+        </script>        
+    }
+    <style type="text/css">
+        .ui-widget-header {
+            background: #EB6864;
+            border: 1px solid #EB6864;
+            color: #EEE;
+        }
+
+        .ui-state-highlight {
+            border: 1px solid #1A873A;
+            background: #1A873A;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h2>@Model.Flower.Name</h2>
+        <hr />
+        @using (Html.BeginForm("BuyItem", "Flowers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => Model.Flower.ID)
+            <table style="display:block; float:left; width:320px;">
+                <tr>
+                    <td colspan="2">
+                        @{
+                            string imagePath = "../../" + @Model.Flower.Image;
+                        }
+                        <img src="@imagePath" alt="@Model.Flower.Name" height="400" width="400" />
+                    </td>
+                </tr>
+                <tr style ="height:30px;"></tr>
+                @if (ViewBag.UserType == "customer")
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Add To Favorites", "AddtoCart", new { flowerID = Model.Flower.ID }, new { @class = "btn btn-primary" })
+                        </td>
+                        <td>
+                            <input type="submit" id="btnCart" name="command" value="Add To Cart" class="btn btn-primary" style="display:block; float: right;" />
+                        </td>
+                    </tr>
+                }                
+                @if (ViewBag.UserType == "employee")
+                {
+                    <tr>
+                        <td>
+                            <div style="display:block; float:left; width:200px; clear:both; margin-top: 20px;">
+                                @Html.ActionLink("Edit", "Edit", new { id = Model.Flower.ID }, new { @class = "btn btn-info" }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = Model.Flower.ID }, new { @class = "btn btn-info" })
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>                    
+                }  
+                <tr>
+                    <td>
+                        <div style="display:block; float:left; width:200px; clear:both; margin-top: 20px;">
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
+                        </div>
+                    </td>
+                </tr>              
+            </table>
+
+            <table style="display:block; float:right; clear:right; width: 600px; text-align: justify; padding-left: 120px;">
+                <tr style="border-bottom: dotted 1px gray">
+                    <td colspan="2">
+                        @Html.DisplayFor(model => model.Flower.Description)
+                    </td>
+                </tr>
+                <tr style="height:50px">
+                    <td style ="width:190px">&nbsp;</td>
+                <tr />
+                <tr>
+                    <td>
+                        Price: @Html.DisplayFor(model => model.Flower.Price) den
+                    </td>
+                    <td>
+                        Number of available pieces: @Html.DisplayFor(model => model.Flower.Quantity)
+                    </td>
+                </tr>
+                <tr style="border-bottom: dotted 1px gray;">
+                    
+                </tr>
+                <tr style="height:50px">
+                    <td>&nbsp;</td>
+                <tr />
+                <tr>
+                    <td>
+                        Select quantity:
+                    </td>
+                    <td>
+                        Include delivery: @Html.CheckBoxFor(model => model.Order.Delivery)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.Order.Quantity, "", new { style = "width:25px;height:25px" }) / @Html.DisplayFor(model => model.Flower.Quantity)
+                    </td>
+                    <td>
+                        Delivery address:
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            Date:
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Order.DateCompleted, @DateTime.Now.ToString(), new { @class = "datepicker" })
+                        </div>
+                        @*<div>
+                            Time:
+                        </div>
+                        <div class="editor-field">
+                            <input value="8:00am" class="timepicker" name="timeOrder" type="text" onchange="timePickerFunction()">
+                        </div>*@
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.Order.PlaceDelivery, 4, 30, null)
+                    </td>
+                </tr>
+                <tr style="height:20px">
+                    <td>&nbsp;</td>
+                <tr />
+                <tr>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        Note:
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">                        
+                        <input type="submit" id="btnBuy" name="command" value="Buy Item" class="btn btn-success" />
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.Order.Description, 4, 30, null)
+                    </td>
+                </tr>
+                @if (TempData["notice"] != null)
+                {
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <p>@TempData["notice"]</p>
+                        </td>
+                    </tr>
+                }
+                @if (TempData["authentication"] != null)
+                {
+                    <tr>
+                        <td style="vertical-align: top; color:red">
+                            <h2>@TempData["authentication"]</h2>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</body>

@@ -1,0 +1,157 @@
+﻿@model FlowerAndGiftShop.Models.Order
+
+@{
+    ViewBag.Title = "My Shop Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <h2>Details</h2>
+    <table class="table">
+        <tr>
+            <th width="300">
+                Order ID
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ID)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Item Type
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ItemType)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Item Name
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ItemName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Quantity
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Quantity)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Date Ordered
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.DateOrdered)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Date to be completed
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.DateCompleted)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Include Delivery
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Delivery)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Delivery Address
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.PlaceDelivery)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Description
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Item Price
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Price)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Sale
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Sale)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Total Price
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TotalPrice)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Status
+            </th>
+            <td>
+                @if (ViewBag.StatusOrderItem != null)
+                {
+                    var statusOrder = ViewBag.StatusOrderItem;
+                    <label class="text-primary"> @statusOrder.Name </label>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.OrderStatusID)
+                }
+            </td>
+        </tr>
+        <tr>
+            @if (ViewBag.UserType == "customer")
+            {
+                <td style="width: 170px;" colspan="3">
+                    @if (ViewBag.StatusOrderItem.ID == 1)
+                    {
+                        @Html.ActionLink("Cancel Order", "Cancel", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Remove From Shop Cart", "Remove", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                    }
+                    | @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
+
+
+                </td>
+            }
+            else if (ViewBag.UserType != "customer")
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-info btn-xs" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-info btn-xs" })
+                </td>
+            }
+        </tr>
+
+    </table>
+</body>
+</html>

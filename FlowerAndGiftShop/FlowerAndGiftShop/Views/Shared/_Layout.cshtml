@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | Viviano Flower&GiftShop </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/journalTheme.css" rel="stylesheet" />
+    @*<link href="~/Content/unitedTheme.css" rel="stylesheet" />*@
+
+</head>
+<body style="background-color: white;">
+    <div class="navbar navbar-default navbar-fixed-top" >
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Flowers<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Roses", "Index", "Flowers", new { typeFlower = "Rose" }, null)</li>
+                            <li>@Html.ActionLink("Gerbera", "Index", "Flowers", new { typeFlower = "Gerbera" }, null)</li>
+                            <li>@Html.ActionLink("Carniations", "Index", "Flowers", new { typeFlower = "Carniation" }, null)</li>
+                            <li>@Html.ActionLink("Lilies", "Index", "Flowers", new { typeFlower = "Lilies" }, null)</li>
+                            <li>@Html.ActionLink("Bouquets", "Index", "Flowers", new { typeFlower = "Bouquet" }, null)</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("All Flowers", "Index", "Flowers", new { typeFlower = "" }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gifts<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Sweets", "Index", "Products", new { typeProduct = "Food" }, null)</li>
+                            <li>@Html.ActionLink("Wines", "Index", "Products", new { typeProduct = "Wine" }, null)</li>
+                            <li>@Html.ActionLink("Teddy Bears", "Index", "Products", new { typeProduct = "Teddy" }, null)</li>
+                            <li>@Html.ActionLink("Balloons", "Index", "Products", new { typeProduct = "Balloon" }, null)</li>
+                            <li>@Html.ActionLink("Cards", "Index", "Products", new { typeProduct = "Card" }, null)</li>
+                            <li>@Html.ActionLink("Birthday", "Index", "Products", new { typeProduct = "Birthday" }, null)</li>
+                            <li>@Html.ActionLink("Wedding", "Index", "Products", new { typeProduct = "Wedding" }, null)</li>
+                            <li>@Html.ActionLink("Christmas", "Index", "Products", new { typeProduct = "Christmas" }, null)</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("All Gifts", "Index", "Products", new { typeProduct = "" }, null)</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Decorations", "Index", "Services", new { name = "Decoration" }, null)</li>
+                            <li>@Html.ActionLink("Events", "Index", "Services", new { name = "Event" }, null)</li>
+                            <li>@Html.ActionLink("Delivery", "Index", "Services", new { name = "Delivery" }, null)</li>
+                            <li>@Html.ActionLink("Promotions", "Promotion", "Services", new { name = "Valentine" }, null)</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (ViewBag.UserType == "customer")
+                    {
+                        <li>@Html.ActionLink("My Favorites", "Index", "ShopCart")</li>
+                        <li>@Html.ActionLink("My Shop Cart", "Index", "OrderPackages")</li>
+                        <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
+                    }     
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div style=" background-color: white; width: 96%; display: inline-block; margin: 30px auto auto 15px;">
+        <div class="container body-content" style="width: 78%; display: inline-block; float: left; margin: 30px auto auto 15px;">
+            @RenderBody()
+        </div>
+
+        <div style="width: 16%; height:700px; border: 0px dotted gray; display: inline-block; text-align: justify; clear: right; margin:60px auto auto 25px;">
+            
+            <div class="well well-lg">
+                <p>Flower & Gift Shop Viviano Logo</p>
+            </div>
+
+            <div class="panel panel-primary" style="width:100%; height: 25%; display:block; ">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Promotions</h3>
+                </div>
+                <div class="panel-body" >
+                    Enjoy at more than 50 products included in Valentine's day promotion!
+                </div>
+            </div>
+            <div class="panel panel-primary" style="width:100%; height: 25%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Delivery</h3>
+                </div>
+                <div class="panel-body">
+                    Free delivery for every order with payment at least 30 minutes after it is created!
+                </div>
+            </div>
+            <div class="panel panel-primary" style="width:100%; height: 25%;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register account</h3>
+                </div>
+                <div class="panel-body">
+                    Still not our member? Register your account for FREE and use our great services!
+                </div>
+            </div>
+        </div>
+
+        <footer style="display: block; clear: both; margin-top: 20px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">&copy; @DateTime.Now.Year - Flower & Gift Shop Viviano</h3>
+                </div>
+                @*<div class="panel-body">
+                    Panel content
+                </div>*@
+            </div>            
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

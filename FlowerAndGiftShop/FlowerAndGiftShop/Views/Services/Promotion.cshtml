@@ -1,0 +1,55 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Product>
+
+@{
+    ViewBag.Title = "Promotion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 0;
+    var tr = new HtmlString("<tr>");
+    var trclose = new HtmlString("</tr>");
+    var promotionSale = 40;
+}
+
+<h2>Promotion up to @promotionSale%! </h2>
+
+@if (ViewBag.UserType == "employee")
+{
+    <p style="margin-top: 30px;">
+        @Html.ActionLink("Create Promotion", "CreatePromotion", null, new { @class = "btn btn-success" })
+    </p>
+}
+<table class="table">
+    <tr>
+        @foreach (var item in Model)
+        {
+            <td style="width: 200px;">
+                <img src="../@item.Image" alt="@item.Name" height="210" width="180" />
+            </td>
+            <td>
+                <div style="height: 145px">
+                    @Html.DisplayFor(modelItem => item.Name)
+                    <br />
+                    @{
+            decimal totalPrice = (decimal)item.Price - (item.Price * promotionSale / 100);
+                    }
+                    <label style="text-decoration: line-through;" class="text-danger">@item.Price den</label>
+                    <br />
+                    <label class="text-success">@totalPrice den</label>
+                    @*@Html.DisplayFor(modelItem => item.Price, null, new { @style="text-decoration: line-through;"}) den.*@
+                    <br />
+                </div>
+                <div style="display: block; height: 60px">
+                    @Html.ActionLink("Details", "Details","Products", new { id = item.ID, sale = promotionSale }, new { @class = "btn btn-primary", @style = "" })
+                    <br />
+                </div>
+            </td>
+            
+            count++;
+            if (count % 3 == 0)
+            {
+                @trclose;
+                @tr;
+            }
+        }
+    </tr>
+</table>
+

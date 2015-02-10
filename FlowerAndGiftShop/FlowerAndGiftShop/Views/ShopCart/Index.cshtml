@@ -1,0 +1,85 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.ShopCart>
+
+@{
+    ViewBag.Title = "My Favorites";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var textMessage = "";
+    if(ViewBag.customerShopCart == null || Model.Count() == 0)
+    {
+        textMessage = "Вашата листа на омилени производи е празна.";
+    }
+}
+
+<h2>My Favorites</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Item Code
+        </th>
+        <th>
+            Item Type
+        </th>
+        <th>
+            Item Name
+        </th>        
+        <th>
+            Price
+        </th>
+        @*<th>
+        Quantity
+        </th>
+        <th>
+            Sale
+        </th>
+        <th>
+            Total Price
+        </th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sale)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>*@
+        </tr>
+        <tr style="margin: 10px auto 10px auto;">
+            @if (ViewBag.UserType == "customer")
+            {
+                <td style="width: 100px;" colspan="3">
+                    @Html.ActionLink("Go to Item Details", "ItemDetails", new { id = item.ItemID, type = item.ItemType })
+                    |
+                    @Html.ActionLink("Remove from Favorites", "Remove", new { id = item.ID })
+                </td>   
+            }
+        </tr>
+    }
+</table>
+
+
+<div>
+    <hr />
+    <p>
+        @textMessage
+    </p>
+</div>
