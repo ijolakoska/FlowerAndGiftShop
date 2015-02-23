@@ -57,7 +57,7 @@ namespace FlowerAndGiftShop.Controllers
             return View(product);
         }
 
-        public ActionResult Index(string typeProduct)
+        public ActionResult Index(string typeProduct, string searchedText)
         {
             var products = from p in db.Product
                            select p;
@@ -65,6 +65,12 @@ namespace FlowerAndGiftShop.Controllers
             if (!String.IsNullOrEmpty(typeProduct))
             {
                 products = db.Product.Where(s => s.Type.Contains(typeProduct));
+            }
+
+            if (!String.IsNullOrEmpty(searchedText))
+            {
+                searchedText = searchedText.ToLower();
+                products = db.Product.Where(s => s.Type.ToLower().Contains(searchedText) || s.Name.ToLower().Contains(searchedText));
             }
 
             var flowers = from f in db.Flower
@@ -158,7 +164,7 @@ namespace FlowerAndGiftShop.Controllers
             {
                 if (file != null)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("Images/Products/") + file.FileName);
+                    file.SaveAs(HttpContext.Server.MapPath("~/Images/Products/") + file.FileName);
                     string fileName = "Images/Products/" + file.FileName;
                     product.Image = fileName;
                 }
@@ -230,9 +236,9 @@ namespace FlowerAndGiftShop.Controllers
                 order.DateCompleted = customerOrder.Order.DateCompleted.Date;
                 order.Description = customerOrder.Order.Description;
                 order.Price = product.Price;
-                order.Sale = customerOrder.Order.Sale;
-                order.TotalPrice = order.Price - (order.Sale * order.Price / 100); 
-
+                order.Sale = customerOrder.Order.Sale * order.Price / 100;
+                order.TotalPrice = order.Price - (customerOrder.Order.Sale * order.Price / 100);
+               
                 if (customerOrder.Order.Quantity > 0)
                 {
                     order.Quantity = customerOrder.Order.Quantity;
@@ -242,6 +248,7 @@ namespace FlowerAndGiftShop.Controllers
                         return RedirectToAction("Details/" + itemID);
                     }
                     product.Quantity = product.Quantity - order.Quantity;
+                    order.TotalPrice = order.TotalPrice * order.Quantity;
                 }
                 order.Delivery = customerOrder.Order.Delivery;
                 if (customerOrder.Order.Delivery)

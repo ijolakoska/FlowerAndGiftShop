@@ -10,7 +10,7 @@
     <script>
         $(document).ready(function () {
             $(".datepicker").datepicker({
-                dateFormat: "dd/mm/yy"
+                dateFormat: "dd/MM/yy"
             });
         });
     </script>
@@ -34,12 +34,19 @@
         @using (Html.BeginForm("BuyItem", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(model => Model.Product.ID)
-            @Html.HiddenFor(model => Model.Order.Sale)
+            if (Model.Order != null && Model.Order.Sale != null) 
+            { 
+                 @Html.HiddenFor(model => Model.Order.Sale)
+            }
+            else
+            {
+                <input name="Model.Order.Sale" value="0" hidden/>
+            }
             <table style="display:block; float:left; width:320px;">
                 <tr>
                     <td colspan="2">
                         @{
-            string imagePath = "../../" + @Model.Product.Image;
+                            string imagePath = "../../" + @Model.Product.Image;
                         }
                         <img src="@imagePath" alt="@Model.Product.Name" height="400" width="400" />
                     </td>
@@ -89,10 +96,10 @@
                 <tr>
                     <td>
                         Price: <br />
-                        @if (Model.Order.Sale != 0)
+                        @if (Model.Order != null && Model.Order.Sale != 0)
                         {
                             var promotionSale = Model.Order.Sale;
-                            decimal totalPrice = (decimal)(Model.Product.Price * promotionSale) / 100;
+                            decimal totalPrice = (decimal)@Model.Product.Price - ((Model.Product.Price * promotionSale) / 100);
                             <label style="text-decoration: line-through;" class="text-danger">@Model.Product.Price den</label>
                             <br />
                             <label class="text-success">@totalPrice den</label>
@@ -156,7 +163,11 @@
                 </tr>
                 <tr>
                     <td style="vertical-align: top;">
-                        <input type="submit" id="btnBuy" name="command" value="Buy Item" class="btn btn-success" />
+                        @if (ViewBag.UserType != "employee")
+                        {
+                            <input type="submit" id="btnBuy" name="command" value="Buy Item" class="btn btn-success" />
+                        }
+                        
                     </td>
                     <td>
                         @Html.TextAreaFor(model => model.Order.Description, 4, 30, null)

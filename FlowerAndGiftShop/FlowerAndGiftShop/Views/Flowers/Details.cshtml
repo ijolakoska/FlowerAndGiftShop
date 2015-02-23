@@ -10,7 +10,7 @@
         <script>
             $(document).ready(function () {
                 $(".datepicker").datepicker({
-                    dateFormat: "dd/mm/yy"
+                    dateFormat: "dd/MM/yy"
                 });
             });
         </script>        
@@ -148,8 +148,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="vertical-align: top;">                        
-                        <input type="submit" id="btnBuy" name="command" value="Buy Item" class="btn btn-success" />
+                    <td style="vertical-align: top;"> 
+                        @if (ViewBag.UserType != "employee")
+                        {
+                            <input type="submit" id="btnBuy" name="command" value="Buy Item" class="btn btn-success" />
+                        }                       
                     </td>
                     <td>
                         @Html.TextAreaFor(model => model.Order.Description, 4, 30, null)

@@ -7,7 +7,7 @@
     var textMessage = "";
     if(ViewBag.customerShopCart == null || Model.Count() == 0)
     {
-        textMessage = "Вашата листа на омилени производи е празна.";
+        textMessage = "Your list of favourite items is empty.";
     }
 }
 
@@ -67,9 +67,9 @@
             @if (ViewBag.UserType == "customer")
             {
                 <td style="width: 100px;" colspan="3">
-                    @Html.ActionLink("Go to Item Details", "ItemDetails", new { id = item.ItemID, type = item.ItemType })
+                    @Html.ActionLink("Go to Item Details", "ItemDetails", new { id = item.ItemID, type = item.ItemType }, new { @class = "btn btn-primary" })
                     |
-                    @Html.ActionLink("Remove from Favorites", "Remove", new { id = item.ID })
+                    @Html.ActionLink("Remove from Favorites", "Remove", new { id = item.ID }, new { @class = "btn btn-info" })
                 </td>   
             }
         </tr>

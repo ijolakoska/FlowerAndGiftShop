@@ -59,7 +59,7 @@ namespace FlowerAndGiftShop.Controllers
         }
         
         // GET: Services
-        public ActionResult Index()
+        public ActionResult Index(String name)
         {
             string userID = User.Identity.GetUserId();
             if (userID != null)
@@ -70,8 +70,9 @@ namespace FlowerAndGiftShop.Controllers
             else
             {
                 ViewBag.UserType = "unauthorized";
-            }     
-            return View(db.Service.ToList());
+            }    
+ 
+            return View();
         }
 
         public ActionResult Promotion(string name)
@@ -153,12 +154,21 @@ namespace FlowerAndGiftShop.Controllers
         #endregion
 
         #region POST METHODS
+        [Authorize(Roles = "admin, employee")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Type,Price,Image")] Service service)
+        public ActionResult Create(Service service, HttpPostedFileBase file)
         {
+            
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Images/Services/") + file.FileName);
+                    string fileName = "Images/Services/" + file.FileName;
+                    service.Image = fileName;
+                }
+
                 db.Service.Add(service);
                 db.SaveChanges();
                 return RedirectToAction("Index");

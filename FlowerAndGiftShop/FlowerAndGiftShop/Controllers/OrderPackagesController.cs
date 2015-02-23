@@ -103,7 +103,7 @@ namespace FlowerAndGiftShop.Controllers
             db.SaveChanges();
 
             //TODO: send message for successfully buyed item
-            return RedirectToAction("Index");
+            return RedirectToAction("../Orders/Index");
         }
 
         [Authorize]
@@ -112,7 +112,7 @@ namespace FlowerAndGiftShop.Controllers
             var listIds = ids.Split(',');
             
             foreach (var id in listIds){
-                if (id != "0" && id != null)
+                if (id != "0" && id != null && id != "")
                 {
                     Order order = db.Order.Find(int.Parse(id));
                     order.OrderStatusID = 1;

@@ -153,6 +153,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_LocalResources\FAGShopResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FAGShopResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_LocalResources\FAGShopResources.en-EN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FAGShopResources.en-EN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_LocalResources\FAGShopResources.mk-MK.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FAGShopResources.mk-MK.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -167,6 +182,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ShopCartController.cs" />
     <Compile Include="DataAccessLayer\FlowerAndGiftShopContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -500,6 +516,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <Content Include="Images\Events\a1.jpg" />
+    <Content Include="Images\Events\d1.JPG" />
+    <Content Include="Images\Events\d2.JPG" />
+    <Content Include="Images\Events\d3.JPG" />
+    <Content Include="Images\Events\i1.jpg" />
     <Content Include="Images\Flowers\AutumnBouquet.jpg" />
     <Content Include="Images\Flowers\BlueEden.jpg" />
     <Content Include="Images\Flowers\BluesAndWhites.jpg" />
@@ -522,6 +543,18 @@
     <Content Include="Images\Products\Vince &amp; Joe%27s Wintry Delight.jpg" />
     <Content Include="Images\Products\Vince&amp;JoesWintry Delight.jpg" />
     <Content Include="Images\Products\WarmHugs.jpg" />
+    <Content Include="Images\Services\chris1.jpg" />
+    <Content Include="Images\Services\chris2.jpg" />
+    <Content Include="Images\Services\chris3.jpg" />
+    <Content Include="Images\Services\out1.jpg" />
+    <Content Include="Images\Services\out2.jpg" />
+    <Content Include="Images\Services\out4.jpg" />
+    <Content Include="Images\Services\party1.jpg" />
+    <Content Include="Images\Services\party2.jpg" />
+    <Content Include="Images\Services\party3.jpg" />
+    <Content Include="Images\Services\Wedding-Decoration-1.jpg" />
+    <Content Include="Images\Services\Wedding-Decoration-Flowers-1.jpg" />
+    <Content Include="Images\Services\Wedding-Decorations-12.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Bootstrap\dist\css\bootstrap-theme.css.map" />
@@ -721,8 +754,25 @@
     <Content Include="Views\OrderPackages\Index.cshtml" />
     <Content Include="Views\OrderPackages\Details.cshtml" />
     <Content Include="Views\Services\Promotion.cshtml" />
+    <Content Include="Views\Orders\AllOrders.cshtml" />
+    <Content Include="Views\Shared\_LanguagePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="App_LocalResources\FAGShopResources.en-EN.resx">
+      <CustomToolNamespace>FlowerAndGiftShop</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FAGShopResources.en-EN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_LocalResources\FAGShopResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FAGShopResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>FlowerAndGiftShop</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_LocalResources\FAGShopResources.mk-MK.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FAGShopResources.mk-MK.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>FlowerAndGiftShop</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410282145177_InitialCreate.resx">
       <DependentUpon>201410282145177_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
@@ -780,7 +830,7 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\App_LocalResources\" />
+    <Folder Include="Images\Decorations\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

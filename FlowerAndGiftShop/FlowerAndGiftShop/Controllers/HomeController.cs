@@ -43,8 +43,17 @@ namespace FlowerAndGiftShop.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            }
             return View();
         }
     }

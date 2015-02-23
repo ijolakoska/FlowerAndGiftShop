@@ -1,0 +1,123 @@
+﻿@model IEnumerable<FlowerAndGiftShop.Models.Order>
+
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var textMessage = "";
+    if (Model.Count() == 0)
+    {
+        textMessage = "There are no orders at this moment.";
+    }
+
+    if (ViewBag.selectedStatus != null)
+    {
+        <script>
+            $('#statusOrderDD').val(ViewBag.selectedStatus);
+        </script>
+    }
+
+}
+<script>
+    function changeStatusOrder() {
+        var statusValue = $('#statusOrderDD').val();
+       
+        $('#statusOrderDD').val(statusValue);
+        //$.ajax({
+        //    url: "../Orders/AllOrders/",
+        //    data: {status: statusValue}
+        //});
+        //$('#statusOrderDD').val(statusValue);
+        //$("form").submit();
+
+        window.location = "/Orders/AllOrders?status=" + statusValue;
+    }
+    
+</script>
+<h2>All Orders</h2>
+@*@using (Html.BeginForm("AllOrders", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{*@ 
+    <div id="statusOrderDiv" class="dropdown" style="display: block; float: right;">
+        <select id="statusOrderDD" onchange="changeStatusOrder()" name="status">
+            <option value="0" selected="selected">- Choose Orders By Status -</option>
+            <option value="1">Uncompleted Orders</option>
+            <option value="2">Completed Orders</option>
+            <option value="7">Rejected Orders</option>
+            <option value="8">All Orders</option>
+        </select>
+    </div>
+@*}*@
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Customer ID
+        </th>
+        <th>
+            Item Type
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Date Ordered
+        </th>
+        <th>
+            Date to be completed
+        </th>
+        <th>
+            Total Price
+        </th>
+        <th>
+            Finished Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOrdered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasCompleted)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 130px;" colspan="2">
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary", @style = "" })
+            </td>
+        </tr>
+        <tr>
+        </tr>
+    }
+
+</table>
+<div>
+    <hr />
+    <p>
+        @textMessage
+    </p>
+</div>

@@ -61,14 +61,22 @@ namespace FlowerAndGiftShop.Controllers
             return View(flower);
         }
 
-        public ActionResult Index(string typeFlower)
+        public ActionResult Index(string typeFlower, string searchedText)
         {
+           
+
             var flowers = from f in db.Flower
                           select f;
 
             if (!String.IsNullOrEmpty(typeFlower))
             {
                 flowers = db.Flower.Where(s => s.Type.Contains(typeFlower));
+            }
+
+            if (!String.IsNullOrEmpty(searchedText))
+            {
+                searchedText = searchedText.ToLower();
+                flowers = db.Flower.Where(s => s.Type.ToLower().Contains(searchedText) || s.Name.ToLower().Contains(searchedText));
             }
 
             string userID = User.Identity.GetUserId();
@@ -222,8 +230,8 @@ namespace FlowerAndGiftShop.Controllers
                     order.DateCompleted = flowerOrder.Order.DateCompleted.Date;
                     order.Description = flowerOrder.Order.Description;
                     order.Price = flower.Price;
-                    order.Sale = 0;
-                    order.TotalPrice = order.Price - (order.Sale / 100 * order.Price);
+                    order.Sale = flowerOrder.Order.Sale * order.Price / 100;
+                    order.TotalPrice = order.Price - (flowerOrder.Order.Sale * order.Price / 100);
 
                     if (flowerOrder.Order.Quantity > 0)
                     {
@@ -234,6 +242,7 @@ namespace FlowerAndGiftShop.Controllers
                             return RedirectToAction("Details/" + itemID);
                         }
                         flower.Quantity = flower.Quantity - order.Quantity;
+                        order.TotalPrice = order.TotalPrice * order.Quantity;
                     }
                     order.Delivery = flowerOrder.Order.Delivery;
                     if (flowerOrder.Order.Delivery)
@@ -246,7 +255,7 @@ namespace FlowerAndGiftShop.Controllers
                     if (command == "Buy Item")
                     {
                         order.OrderStatusID = 1;
-                        controllerName = "Order";
+                        controllerName = "Orders";
                     }
                     else if (command == "Add To Cart")  //into order packages
                     {
@@ -258,6 +267,16 @@ namespace FlowerAndGiftShop.Controllers
                     {
                         db.Order.Add(order);
                         db.Entry(flower).State = EntityState.Modified;
+                        db.SaveChanges();
+                        if (command == "Add To Cart")  //into order packages
+                        {
+                            OrderPackages orderPackage = new OrderPackages();
+                            orderPackage.OrderID = order.ID;
+                            orderPackage.CustomerID = User.Identity.GetUserId();
+                            orderPackage.DateOrdered = DateTime.Now;
+                            db.OrderPackages.Add(orderPackage);
+                        }
+
                         db.SaveChanges();
                     }
                     catch (Exception e)

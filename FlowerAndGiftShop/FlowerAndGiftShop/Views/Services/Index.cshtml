@@ -7,75 +7,84 @@
 
 @if (ViewBag.UserType == "employee")
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
+    <p style="margin-top: 30px;">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
     </p>
 }
-<a name="Events">
+<a name="events"></a>
+    <h1>Events & Decorations</h1>
+
+<a name="wedding"></a>
     <div class="row" style="text-align: justify;">
-        <div class="col-md-4" style="padding:30px; ">
-            <h2>Promotions</h2>
-            <p>
-                This month you can enjoy at more than 50 products included in Valentine's day promotion.
-                Stay tuned 'cause many new promotions are coming up - new month, same place!
-            </p>
-            <p><a class="btn btn-info" href="~/Services/Promotion">View current promotion &raquo;</a></p>
+        <h2 style="padding:30px;">Wedding</h2>
+        <div class="col-md-4" style="padding:30px; ">            
+            <img src="~/Images/Services/Wedding-Decoration-1.jpg" alt="" height="300" width="300" />
         </div>
         <div class="col-md-4" style="padding:30px;">
-            <h2>Free Delivery</h2>
-            <p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
-            <p><a class="btn btn-info" href="~/Services/Index#Delivery">More about delivery &raquo;</a></p>
+            <img src="~/Images/Services/Wedding-Decoration-Flowers-1.jpg" alt="" height="300" width="300" />
         </div>
         <div class="col-md-4" style="padding:30px;">
-            <h2>Register account</h2>
-            <p>Still not our member? Register your account for FREE and use our great features like having your own list of Favourites, make Orders or keep items to your Shop Cart!</p>
-            <p><a class="btn btn-info" href="~/Account/Register">Register NOW &raquo;</a></p>
-        </div>
-    </div>
-    <div class="row" style="text-align: justify;">
-        <div class="col-md-4" style="padding:30px; ">
-            <h2>Promotions</h2>
-            <p>
-                This month you can enjoy at more than 50 products included in Valentine's day promotion.
-                Stay tuned 'cause many new promotions are coming up - new month, same place!
-            </p>            
-        </div>
-    </div>
-</a>
-<a name="Decorations"></a>
-    <div class="row" style="text-align: justify;">
-        <div class="col-md-4" style="padding:30px; ">
-            <h2>Decorations</h2>
-            <p>
-                This month you can enjoy at more than 50 products included in Valentine's day promotion.
-                Stay tuned 'cause many new promotions are coming up - new month, same place!
-            </p>
-        </div>
-        <div class="col-md-4" style="padding:30px;">
-            <h2>Free Delivery</h2>
-            <p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
-            
-        </div>
-        <div class="col-md-4" style="padding:30px;">
-            <h2>Register account</h2>
-            <p>Still not our member? Register your account for FREE and use our great features like having your own list of Favourites, make Orders or keep items to your Shop Cart!</p>
-            
+            <img src="~/Images/Services/Wedding-Decorations-12.jpg" alt="" height="300" width="300" />
         </div>
     </div>
 
-
+<a name="party"></a>
     <div class="row" style="text-align: justify;">
+        <h2 style="padding:30px;">Party </h2>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/party3.jpg" alt="" height="300" width="300" />
+        </div>  
         <div class="col-md-4" style="padding:30px; ">
-            <h2>Promotions</h2>
+            <img src="~/Images/Services/party1.jpg" alt="" height="300" width="300" />
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/party2.jpg" alt="" height="300" width="300" />
+        </div> 
+    </div>
+
+<a name="outdoor"></a>
+    <div class="row" style="text-align: justify;">
+        <h2 style="padding:30px;">Outdoor</h2>
+        <div class="col-md-4" style="padding:30px; ">
+            <img src="~/Images/Services/out4.jpg" alt="" height="300" width="300" />
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/out2.jpg" alt="" height="300" width="300" />
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/out1.jpg" alt="" height="300" width="300" />
+        </div>
+    </div>
+
+<a name="christmas"></a>
+    <div class="row" style="text-align: justify;">
+        <h2 style ="padding:30px;">Christmas</h2>
+        <div class="col-md-4" style="padding:30px; ">
+            <img src="~/Images/Services/chris1.jpg" alt="" height="300" width="300" />
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/chris3.jpg" alt="" height="300" width="300" />
+        </div>
+        <div class="col-md-4" style="padding:30px;">
+            <img src="~/Images/Services/chris2.jpg" alt="" height="300" width="300" />
+        </div>
+    </div>
+
+<a name="promotions"></a>
+    <div class="row" style="text-align: justify; padding:30px;">
+        <h2 style="padding:30px;">Promotions</h2>
             <p>
                 This month you can enjoy at more than 50 products included in Valentine's day promotion.
                 Stay tuned 'cause many new promotions are coming up - new month, same place!
             </p>
-        </div>
     </div>
 
 <a name="Delivery"></a>
-<h2>Free Delivery</h2>
-<p>Our shop offers free delivery for every order with payment at least 30 minutes after it is created.</p>
-<p>Our shop offers free delivery for every order which address is less than 30km from our shop address.</p>
+    <div class="row" style="text-align: justify; padding:30px;">
+        <h2 style="padding:30px;">Free Delivery</h2>
+        <p>>> Free delivery for every order with payment at least 30 minutes after it is created <<</p>
+        <p>>> Free delivery for every order which address is less than 30km from our shop address <<</p>
+    </div>
 
+<br />
+    

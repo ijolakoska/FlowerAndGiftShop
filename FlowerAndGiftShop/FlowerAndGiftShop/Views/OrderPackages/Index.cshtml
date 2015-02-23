@@ -6,9 +6,10 @@
     var textMessage = "";
     if (ViewBag.customerShopCart == null || Model.Count() == 0)
     {
-        textMessage = "Вашата кошничка е празна.";
+        textMessage = "Your shop cart is empty.";
     }
     var idList = "";
+    decimal totalOrdersPrice = 0;
 }
 
 <h2>My Shop Cart</h2>
@@ -64,6 +65,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalPrice)
+                @{
+                    totalOrdersPrice = totalOrdersPrice + (decimal) item.TotalPrice;
+                }
             </td>
         @*</tr>
         <tr style="margin: 10px auto 10px auto;">*@
@@ -86,9 +90,15 @@
 </table>
 @if (ViewBag.customerShopCart != null || Model.Count() != 0)
 {
-    <tr>
-        <td>
-            @Html.ActionLink("Buy All", "BuyAllItems", new { ids = idList })
+    <hr />
+    <tr >
+        <td style="display: block; float: right; text-align: right; margin-right: 0px;">
+            <div style="display: block; float: right; text-align: right; margin-right: 20px;">
+                <strong style="margin-right: 10px;">
+                    @totalOrdersPrice
+                </strong>
+                @Html.ActionLink("Buy All", "BuyAllItems", new { ids = idList }, new { @class = "btn btn-primary", style = "padding-right: 10px;" })
+            </div>
         </td>
     </tr>
 }

@@ -28,12 +28,32 @@ namespace FlowerAndGiftShop.Controllers
         [Authorize(Roles = "admin, employee")]
         public ActionResult Create()
         {
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            } 
             return View();
         }
 
         [Authorize(Roles = "admin, employee")]
         public ActionResult Edit(int? id)
         {
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            } 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,8 +100,8 @@ namespace FlowerAndGiftShop.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
-        public ActionResult Index()
+        [Authorize(Roles = "customer")]
+        public ActionResult Index(int? status)
         {
             string userID = User.Identity.GetUserId();
             if (userID != null)
@@ -97,7 +117,67 @@ namespace FlowerAndGiftShop.Controllers
                                                 && s.OrderStatusID != 4
                                                 && s.OrderStatusID != 5
                                                 && s.OrderStatusID != 6);
+            
+            if (status == 1 || status == 2 || status == 7)
+            {
+                orders = db.Order.Where(s => s.CustomerID.Contains(userID) 
+                                        && s.OrderStatusID == status);
+            }
+
+            ViewBag.selectedStatus = status;
             return View(orders);
+        }
+
+        [Authorize(Roles = "employee")]
+        public ActionResult AllOrders(int? status)
+        {
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            }     
+            var orders = db.Order.Where(s => s.OrderStatusID != 4
+                                                && s.OrderStatusID != 5
+                                                && s.OrderStatusID != 6);
+
+            if (status == 1 || status == 2 || status == 7)
+            {
+                orders = db.Order.Where(s => s.OrderStatusID == status);
+            }
+
+            ViewBag.selectedStatus = status;
+            return View(orders);
+        }
+
+        [Authorize(Roles = "employee")]
+        public ActionResult AllOrdersByStatus(int status)
+        {
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            }
+
+            var orders = db.Order.Where(s => s.OrderStatusID != 4
+                                                && s.OrderStatusID != 5
+                                                && s.OrderStatusID != 6);
+
+            if (status == 1 || status == 2)
+            {
+                orders = db.Order.Where(s => s.OrderStatusID == status);
+            }
+            return RedirectToAction("AllOrders", new { model = orders });
+            //return View("AllOrders", orders);
         }
 
         [Authorize]
@@ -110,16 +190,17 @@ namespace FlowerAndGiftShop.Controllers
             CustomerOrder customerOrder = new CustomerOrder();
             Order order = db.Order.Find(id);
             customerOrder.Order = order;
-            Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(order.CustomerID)).FirstOrDefault();
-            if (cust != null)
+
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
             {
-                customerOrder.Customer = cust;
-                ViewBag.UserType = "customer";
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
             }
             else
             {
-                ViewBag.UserType = "employee";
-            }
+                ViewBag.UserType = "unauthorized";
+            } 
 
             if (order.ItemType.Equals("Flower"))
             {
@@ -165,8 +246,48 @@ namespace FlowerAndGiftShop.Controllers
             order.HasCompleted = true;
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            string userID = User.Identity.GetUserId();
+            if (userID != null)
+            {
+                Customer cust = (Customer)db.Customer.Where(s => s.UserID.Equals(userID)).FirstOrDefault();
+                ViewBag.UserType = (cust != null) ? "customer" : "employee";
+            }
+            else
+            {
+                ViewBag.UserType = "unauthorized";
+            }
+
+            if (ViewBag.UserType == "customer")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("AllOrders");
+            }
+            //return RedirectToAction("Index");
         }
+        
+        public ActionResult Reject(int id)
+        {
+            Order order = db.Order.Find(id);
+            order.OrderStatusID = 7; 
+            order.HasCompleted = true;
+            db.Entry(order).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AllOrders");
+        }
+        
+        public ActionResult SetCompleted(int id)
+        {
+            Order order = db.Order.Find(id);
+            order.OrderStatusID = 2; 
+            order.HasCompleted = true;
+            db.Entry(order).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("AllOrders");
+        }        
         #endregion
 
         #region POST METHODS

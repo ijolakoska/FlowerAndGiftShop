@@ -94,7 +94,7 @@
                 Item Price
             </th>
             <td>
-                @Html.DisplayFor(model => model.Order.Price)
+                @Html.DisplayFor(model => model.Order.Price) den.
             </td>
         </tr>
         <tr>
@@ -102,7 +102,7 @@
                 Sale
             </th>
             <td>
-                @Html.DisplayFor(model => model.Order.Sale)
+                - @Html.DisplayFor(model => model.Order.Sale) den.
             </td>
         </tr>
         <tr>
@@ -110,7 +110,7 @@
                 Total Price
             </th>
             <td>
-                @Html.DisplayFor(model => model.Order.TotalPrice)
+                @Html.DisplayFor(model => model.Order.TotalPrice) den.
             </td>
         </tr>
         <tr>
@@ -141,17 +141,32 @@
                     {
                         @Html.ActionLink("Remove From List", "Remove", new { id = Model.Order.ID }, new { @class = "btn btn-primary" })
                     }
-                    | @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
+                    | @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-info" })
                     
                    
                 </td>
             }
-            else if (ViewBag.UserType != "customer")
+            else if (ViewBag.UserType == "employee")
             {
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.Order.ID }, new { @class = "btn btn-info btn-xs" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.Order.ID }, new { @class = "btn btn-info btn-xs" })
+                    @if (ViewBag.StatusOrderItem.ID == 1)
+                    {
+
+                        @Html.ActionLink("Set As Completed", "SetCompleted", new { id = Model.Order.ID }, new { @class = "btn btn-success" }) 
+                        <span>|</span>
+                        @Html.ActionLink("Reject Order", "Reject", new { id = Model.Order.ID }, new { @class = "btn btn-danger", @style = "background-color: red;" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Remove From List", "Remove", new { id = Model.Order.ID }, new { @class = "btn btn-info" })
+                    
+                        
+                    }
+                    <br /> <br />
+                    @Html.ActionLink("Back", "AllOrders", null, new { @class = "btn btn-primary" })
                 </td>
+                
+
             }
         </tr>
 

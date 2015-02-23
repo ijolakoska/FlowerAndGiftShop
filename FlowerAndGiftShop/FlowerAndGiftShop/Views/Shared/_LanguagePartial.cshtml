@@ -1,0 +1,15 @@
+﻿@*<span class="container-znaminja">
+    <a title="english" onclick="ChangeLanguage('en-EN','true')">EN</a>
+    <a title="македонски" onclick="ChangeLanguage('mk-MK','true')">MK</a>
+</span>*@
+
+@Html.ActionLink("English", "ChangeCulture", "Shared",
+     new { lang = "en", returnUrl = this.Request.RawUrl }, null)
+@Html.ActionLink("MKD", "ChangeCulture", "Shared",
+     new { lang = "mk-MK", returnUrl = this.Request.RawUrl }, null)
+
+<script>
+    function ChangeLanguage(language, isUserAuthorized) {
+        window.location = "/Shared/ChangeLanguage?language=" + language + "&isUserAuthorized=" + isUserAuthorized;
+    }
+</script>
